@@ -1,0 +1,43 @@
+<h3> {{title}} works!</h3>
+<table class="table">
+  <tr>
+    <th>Room Number</th>
+    <th>Room Type</th>
+    <th>Room Price</th>
+    <th>Room Amenities</th>
+    <th>Checkin Time</th>
+    <th>Checkout Time</th>
+    <th>Rating </th>
+    <th>Select Room</th>
+  </tr>
+  <!-- @for (item of roomList | slice:0:2; track $index) { -->
+  @for (item of rooms; track $index) {
+  <!-- apploed ngclass but class.<calssname>  -->
+  <tr
+    [class.bg-gray-100]="$index % 2 === 0"
+    [class.bg-white]="$index % 2 !== 0"
+  >
+    <td
+      [ngStyle]="{
+        color: $index > 1 ? 'red' : 'green'
+      }"
+    >
+      {{ item.roomNumber }}
+    </td>
+    <td>{{ item.roomType.replace("Room", "") | uppercase }}</td>
+    <td>{{ item.price | currency : "INR" }}</td>
+    <td>{{ item.amenities | titlecase }}</td>
+    <td>{{ item.checkinTime | date}}</td>
+    <td>{{ item.checkoutTime | date }}</td>
+    <td>{{ item.rating | number : "1.0-0" }}</td>
+    <td>
+        <button 
+            class="btn btn-primary" 
+            (click)="selectRoom(item)"
+        >
+            Select
+        </button>
+    </td>
+  </tr>
+  }
+</table>

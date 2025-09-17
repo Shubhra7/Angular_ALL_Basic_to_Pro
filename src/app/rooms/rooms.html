@@ -1,10 +1,17 @@
-<p>Welcome to rooms of {{ hotelName() }}</p>
+<!-- <p>Welcome to rooms of {{ hotelName() }}</p> -->
+<app-header></app-header>
+<app-header></app-header>
+<app-header></app-header>
+<app-header></app-header>
+
+
+<button (click)="changeTitle()">Control header child value</button>
 
 <div [hidden]="hideRooms">
   <p>Number of rooms:</p>
   <div [innerText]="numberOfRooms"></div>
 </div>
-<button (click)="toggle()">Toggle to hide</button>
+<button (click)="toggle()">Toggle to hide RoomList and the above part</button>
 <br /><br />
 
 <!-- <div *ngIf="rooms.availableRooms > 0">
@@ -26,45 +33,43 @@
 }@else {
 <h2>No Room Available!!!!!</h2>
 }
+<br><br>
+<h2>Your choosed Room</h2>
+
+@if (selectedRoom) {
+  {{selectedRoom | json}}
+}
+
+<div>
+  <button (click)="addRoom()">Add Room (POST)</button>
+
+  <button (click)="editRoom()">Edit Room (PUT)</button>
+
+  <button (click)="deleteRoom()">Remove Room (DELETE)</button>
+</div>
+
+<h1>{{totalBytes}} loaded</h1>
+
+<p>will show if any error happend by catchError + Subject </p>
+<h1>
+  {{(error$ | async )}}
+  Number of Rooms: {{ roomsCount$ | async}}
+</h1>
+
 
 <h1>ROOM DETAILS</h1>
-@if (roomList.length > 0) {
-<table>
-  <tr>
-    <th>Room Number</th>
-    <th>Room Type</th>
-    <th>Room Price</th>
-    <th>Room Amenities</th>
-    <th>Checkin Time</th>
-    <th>Checkout Time</th>
-    <th>Rating </th>
-  </tr>
-  <!-- @for (item of roomList | slice:0:2; track $index) { -->
-  @for (item of roomList; track $index) {
-  <!-- apploed ngclass but class.<calssname>  -->
-  <tr
-    [class.bg-gray-100]="$index % 2 === 0"
-    [class.bg-white]="$index % 2 !== 0"
-  >
-    <td
-      [ngStyle]="{
-        color: $index > 1 ? 'red' : 'green'
-      }"
-    >
-      {{ $index + 1 }}
-    </td>
-    <td>{{ item.roomType.replace("Room", "") | uppercase }}</td>
-    <td>{{ item.price | currency : "INR" }}</td>
-    <td>{{ item.amenities | titlecase }}</td>
-    <td>{{ item.checkinTime.toLocaleDateString() }}</td>
-    <td>{{ item.checkoutTime | date }}</td>
-    <td>{{ item.rating | number : "1.0-0" }}</td>
-  </tr>
-  }
-</table>
+@if (roomList.length > 0 && !hideRooms) {
+  <!-- @input give roomList and take @output selectedRoom -->
+  <app-rooms-list 
+    [rooms]="roomList" 
+    [title]="title"
+    (selectedRoom)="selectTheRoom($event)"
+  ></app-rooms-list>
 }@else {
-<h2>!!!No room in the Hotel 🤣🤣</h2>
-}
+<h2>!!!No room in the Hotel 🤣🤣 or RoomList hided by the Button</h2>
+} 
+
+<!-- modal pop-up -->
 
 <button class="btn btn-primary" (click)="openModal(content)">Open Modal(popup)</button>
 
