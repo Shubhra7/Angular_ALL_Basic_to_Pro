@@ -1,0 +1,83 @@
+<p>Welcome to rooms of {{ hotelName() }}</p>
+
+<div [hidden]="hideRooms">
+  <p>Number of rooms:</p>
+  <div [innerText]="numberOfRooms"></div>
+</div>
+<button (click)="toggle()">Toggle to hide</button>
+<br /><br />
+
+<!-- <div *ngIf="rooms.availableRooms > 0">
+    Rooms List
+</div> -->
+
+<h3>Use of <code>&#64;if</code></h3>
+@if (rooms.availableRooms && rooms.availableRooms > 0) {
+<div style="margin-bottom: 10px">Rooms List</div>
+<ul>
+  <h3>Use of <code>&#64;for</code></h3>
+
+  @for (item of allRooms; track $index) { @if (item.availableRooms) {
+  <li>{{ item.availableRooms }} ------ {{ item.bookedRooms }}</li>
+  }@else {
+  <li>No room availableRooms</li>
+  } }
+</ul>
+}@else {
+<h2>No Room Available!!!!!</h2>
+}
+
+<h1>ROOM DETAILS</h1>
+@if (roomList.length > 0) {
+<table>
+  <tr>
+    <th>Room Number</th>
+    <th>Room Type</th>
+    <th>Room Price</th>
+    <th>Room Amenities</th>
+    <th>Checkin Time</th>
+    <th>Checkout Time</th>
+    <th>Rating </th>
+  </tr>
+  <!-- @for (item of roomList | slice:0:2; track $index) { -->
+  @for (item of roomList; track $index) {
+  <!-- apploed ngclass but class.<calssname>  -->
+  <tr
+    [class.bg-gray-100]="$index % 2 === 0"
+    [class.bg-white]="$index % 2 !== 0"
+  >
+    <td
+      [ngStyle]="{
+        color: $index > 1 ? 'red' : 'green'
+      }"
+    >
+      {{ $index + 1 }}
+    </td>
+    <td>{{ item.roomType.replace("Room", "") | uppercase }}</td>
+    <td>{{ item.price | currency : "INR" }}</td>
+    <td>{{ item.amenities | titlecase }}</td>
+    <td>{{ item.checkinTime.toLocaleDateString() }}</td>
+    <td>{{ item.checkoutTime | date }}</td>
+    <td>{{ item.rating | number : "1.0-0" }}</td>
+  </tr>
+  }
+</table>
+}@else {
+<h2>!!!No room in the Hotel 🤣🤣</h2>
+}
+
+<button class="btn btn-primary" (click)="openModal(content)">Open Modal(popup)</button>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Hello Modal</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <p>This is modal content!!</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="modal.close()">Close</button>
+    </div>
+</ng-template>
+
