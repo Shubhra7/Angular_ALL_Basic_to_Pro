@@ -6,10 +6,12 @@ import { NgStyle } from '@angular/common';
 import { Employee } from './employee/employee';
 import { localStorageToken } from './localstorage.token';
 import { InitService } from './init';
+import { RouterLink } from '@angular/router';
+import { AppNavComponent } from './app-nav/app-nav.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Rooms, Container, NgStyle, Employee],
+  imports: [RouterOutlet, Rooms, Container, NgStyle, Employee, RouterLink, AppNavComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   styles: [`h1 {color:red;}`],
