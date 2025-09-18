@@ -1,46 +1,105 @@
-<p [ngStyle]="{color: 'blue', 'text-align': 'center'}">Rooms-add works!</p>
+<p [ngStyle]="{ color: 'blue', 'text-align': 'center' }">Rooms-add works!</p>
+<div><h4>Direct ngForm values: </h4></div>
+<p>Form Valid? {{ roomsForm.valid }}</p>
+<p>Form Invalid? {{ roomsForm.invalid }}</p>
+<p>Form Touched? {{ roomsForm.touched }}</p>
 
-{{ room | json}}
+<!-- means clean sheet/ no one touched  = pristine -->
+<p>Pristine: {{ roomsForm.pristine | json }}</p>
 
-<form>
+<!-- means dirty = anything done in this -->
+<p>Dirty: {{ roomsForm.dirty | json }}</p>
+<p>Current Values: {{ roomsForm.value | json }}</p>
+<br />
+<hr />
+
+<div><h4>ngModel getting values binded with room variable:</h4></div>
+{{ room | json }}
+
+@if(sucessMessage !== ''){
+<div class="alert alert-success">
+  {{ sucessMessage }}
+</div>
+}
+
+<!-- #roomsForm="ngForm" ===> It turns the plain <form> into an Angular NgForm object that tracks the form’s state (validity, touched, values, etc.). -->
+
+<form #roomsForm="ngForm" (ngSubmit)="AddRoom(roomsForm)">
   <div class="form-group mb-3">
     <input
+      required
       class="form-control"
       type="text"
       name="roomType"
       [(ngModel)]="room.roomType"
       placeholder="Room Type"
+      #roomTypeCtrl="ngModel"
     />
+    @if (roomTypeCtrl.invalid && roomTypeCtrl.touched) {
+    <p [ngStyle]="{ color: 'red' }">Room Type is required</p>
+    }
   </div>
+
   <div class="form-group mb-3">
     <input
+      required
+      minlength="5"
+      maxlength="20"
       class="form-control"
       type="text"
       name="amenities"
       [(ngModel)]="room.amenities"
       placeholder="Amenities"
+      #amenitiesCtrl="ngModel"
     />
+
+    @if (amenitiesCtrl.touched && amenitiesCtrl.errors?.['required']) {
+        <p [ngStyle]="{ color: 'red' }">Amenities is required</p>
+    } 
+
+    <!-- Error check for get which error -->
+    @if (amenitiesCtrl.touched && amenitiesCtrl.errors?.['minlength']) {
+        <p class="alert alert-danger" >
+        Minimum length is
+        {{ amenitiesCtrl.errors?.["minlength"].requiredLength }}, but you entered
+        {{ amenitiesCtrl.errors?.["minlength"].actualLength }}
+        </p>
+    }
   </div>
   <div class="form-group mb-3">
     <input
+      required
+      min="1"
       class="form-control"
       type="number"
       name="price"
       [(ngModel)]="room.price"
       placeholder="Price"
+      #priceCtrl="ngModel"
     />
+    @if (priceCtrl.touched && priceCtrl.invalid) {
+    <p [ngStyle]="{ color: 'red' }">Price is required</p>
+    } @if (priceCtrl.value <=0 ) {
+    <p [ngStyle]="{ color: 'red' }">Price must be greater than 0</p>
+    }
   </div>
   <div class="form-group mb-3">
     <input
+      required
       class="form-control"
       type="text"
       name="photos"
       [(ngModel)]="room.photos"
       placeholder="Photo Link"
+      #photoCtrl="ngModel"
     />
+    @if (photoCtrl.touched && photoCtrl.invalid) {
+    <p [ngStyle]="{ color: 'red' }">Photo is required</p>
+    }
   </div>
   <div class="form-group mb-3">
     <input
+      required
       class="form-control"
       type="datetime"
       name="checkinTime"
@@ -50,6 +109,7 @@
   </div>
   <div class="form-group mb-3">
     <input
+      required
       class="form-control"
       type="datetime"
       name="checkoutTime"
@@ -59,16 +119,27 @@
   </div>
   <div class="form-group mb-3">
     <input
+      required
+      min="1"
+      max="5"
       class="form-control"
       type="number"
       name="rating"
       [(ngModel)]="room.rating"
       placeholder="Rating"
+      #ratingCtrl="ngModel"
     />
+    @if (ratingCtrl.touched && ratingCtrl.invalid) {
+    <p [ngStyle]="{ color: 'red' }">Rating is required</p>
+    }
   </div>
   <div>
-    <button type="submit" class="btn btn-primary">
-        submit
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="roomsForm.invalid"
+    >
+      submit
     </button>
   </div>
 </form>

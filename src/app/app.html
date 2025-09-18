@@ -1,4 +1,17 @@
-<app-app-nav></app-app-nav>
+<app-app-nav>
+    <div class="foot">
+        @switch (loginTypes) {
+        @case ('Admin') {
+            <p>Admin here</p>
+        }
+        @default {
+            <p>Normal person</p>
+        }
+    }
+    
+    <div #name></div>
+    </div>
+</app-app-nav>
 
 <!-- 
 <h1>Hello {{title()}} </h1> -->
@@ -20,21 +33,6 @@
 
 <hr> -->
 
-
-<div>
-    @switch (loginTypes) {
-        @case ('Admin') {
-            <p>Admin here</p>
-        }
-        @default {
-            <p>Normal person</p>
-        }
-    }
-</div>
-
-<div #name>
-    
-</div>
 
 <!-- Doing Dynamic rendering of child  -->
 <!--  // dynamic load room component using @viewChild -->
