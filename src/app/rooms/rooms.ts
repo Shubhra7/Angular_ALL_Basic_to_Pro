@@ -16,6 +16,7 @@ import { Header } from '../header/header';
 import { Rooms as RoomsService } from './services/rooms';
 import { catchError, map, Observable, of, Subject, Subscription } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
+
 @Component({
   selector: 'app-rooms',
   // imports: [ NgIf ],

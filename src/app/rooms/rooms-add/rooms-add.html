@@ -1,0 +1,74 @@
+<p [ngStyle]="{color: 'blue', 'text-align': 'center'}">Rooms-add works!</p>
+
+{{ room | json}}
+
+<form>
+  <div class="form-group mb-3">
+    <input
+      class="form-control"
+      type="text"
+      name="roomType"
+      [(ngModel)]="room.roomType"
+      placeholder="Room Type"
+    />
+  </div>
+  <div class="form-group mb-3">
+    <input
+      class="form-control"
+      type="text"
+      name="amenities"
+      [(ngModel)]="room.amenities"
+      placeholder="Amenities"
+    />
+  </div>
+  <div class="form-group mb-3">
+    <input
+      class="form-control"
+      type="number"
+      name="price"
+      [(ngModel)]="room.price"
+      placeholder="Price"
+    />
+  </div>
+  <div class="form-group mb-3">
+    <input
+      class="form-control"
+      type="text"
+      name="photos"
+      [(ngModel)]="room.photos"
+      placeholder="Photo Link"
+    />
+  </div>
+  <div class="form-group mb-3">
+    <input
+      class="form-control"
+      type="datetime"
+      name="checkinTime"
+      [(ngModel)]="room.checkinTime"
+      placeholder="Check-in Time"
+    />
+  </div>
+  <div class="form-group mb-3">
+    <input
+      class="form-control"
+      type="datetime"
+      name="checkoutTime"
+      [(ngModel)]="room.checkoutTime"
+      placeholder="Check-out Time"
+    />
+  </div>
+  <div class="form-group mb-3">
+    <input
+      class="form-control"
+      type="number"
+      name="rating"
+      [(ngModel)]="room.rating"
+      placeholder="Rating"
+    />
+  </div>
+  <div>
+    <button type="submit" class="btn btn-primary">
+        submit
+    </button>
+  </div>
+</form>

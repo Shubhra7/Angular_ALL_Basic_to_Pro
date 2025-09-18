@@ -31,12 +31,18 @@
     <td>{{ item.checkoutTime | date }}</td>
     <td>{{ item.rating | number : "1.0-0" }}</td>
     <td>
-        <button 
+        <!-- <button 
             class="btn btn-primary" 
             (click)="selectRoom(item)"
         >
             Select
-        </button>
+        </button> -->
+
+        <!-- // [routerLink] rather than routelink because dynamic value
+         
+        ****** '/rooms' => because start link from here otherwise it will start from already exist url like 'localhost:4200/rooms/rooms/2' 
+        -->
+        <button class="btn btn-primary"  [routerLink]="['/rooms',item.roomNumber]">Book Room</button>
     </td>
   </tr>
   }

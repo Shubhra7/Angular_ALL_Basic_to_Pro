@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { RoomList } from '../roomsType';
 import { CurrencyPipe, DatePipe, DecimalPipe, JsonPipe, NgStyle, TitleCasePipe, UpperCasePipe } from '@angular/common';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-rooms-list',
-  imports: [NgStyle, DatePipe, UpperCasePipe, TitleCasePipe, CurrencyPipe, DecimalPipe],
+  imports: [NgStyle, DatePipe, UpperCasePipe, TitleCasePipe, CurrencyPipe, DecimalPipe, RouterLink],
   templateUrl: './rooms-list.html',
   styleUrl: './rooms-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
