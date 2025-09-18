@@ -76,10 +76,12 @@
       [(ngModel)]="room.price"
       placeholder="Price"
       #priceCtrl="ngModel"
+      appPricevalidator
     />
     @if (priceCtrl.touched && priceCtrl.invalid) {
     <p [ngStyle]="{ color: 'red' }">Price is required</p>
-    } @if (priceCtrl.value <=0 ) {
+    }
+    @if (priceCtrl.errors?.['positivePrice']) {
     <p [ngStyle]="{ color: 'red' }">Price must be greater than 0</p>
     }
   </div>

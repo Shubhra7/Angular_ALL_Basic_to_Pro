@@ -3,10 +3,11 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { JsonPipe, NgStyle } from '@angular/common';
 import { RoomList } from '../roomsType';
 import { Rooms as RoomsService } from '../services/rooms';
+import { Pricevalidator } from '../../pricevalidator/pricevalidator';
 
 @Component({
   selector: 'app-rooms-add',
-  imports: [FormsModule, NgStyle, JsonPipe],
+  imports: [FormsModule, NgStyle, JsonPipe, Pricevalidator],
   templateUrl: './rooms-add.html',
   styleUrl: './rooms-add.scss',
 })

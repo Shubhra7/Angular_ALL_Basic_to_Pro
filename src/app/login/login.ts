@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Emailvalidator } from '../emailvalidator/emailvalidator';
 import { Hover } from '../hover';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, Hover],
+  imports: [FormsModule, Hover, Emailvalidator],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
@@ -13,9 +15,14 @@ export class Login {
   email: string='';
   password: string='';
 
+  // taking Router Service provided by Angular for navgiate 
+  constructor(private route : Router){}
+
   Login(){
     if(this.email==="admin@gmail.com" && this.password==='Admin'){
       alert("Login sucessful");
+      this.route.navigate(['/rooms','add'])
+      // this.route.navigateByUrl('/rooms/add')
     }
   }
 
