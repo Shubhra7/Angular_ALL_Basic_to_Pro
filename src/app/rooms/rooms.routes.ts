@@ -10,7 +10,13 @@ export const ROOMS_ROUTES: Routes = [
         path:'',
         component: Rooms,
         children: [
-            {path: 'list', component: RoomsList},
+
+            // Lazy Loading
+            {
+                path: 'list', 
+                loadComponent: ()=> import('./rooms-list/rooms-list').then(m=> m.RoomsList)    
+            },
+
             {path: 'addy', component: RoomsAdd},
             {path: ':roomid', component: RoomsBooking},
         ]
