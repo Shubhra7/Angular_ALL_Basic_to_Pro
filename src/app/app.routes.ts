@@ -6,6 +6,7 @@ import { RoomsBooking } from './rooms/rooms-booking/rooms-booking';
 import { RoomsAdd } from './rooms/rooms-add/rooms-add';
 import { Login } from './login/login';
 import { ROOMS_ROUTES } from './rooms/rooms.routes';
+import { Booking } from './booking/booking';
 
 export const routes: Routes = [
   { path: 'employee', component: Employee },
@@ -24,5 +25,6 @@ export const routes: Routes = [
 
   { path: 'login', component: Login },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'bookings', component: Booking},
   { path: '**', component: Notfound }, //wildcart route
 ];

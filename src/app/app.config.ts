@@ -13,6 +13,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { requestInterceptor } from './request-interceptor';
 import {  InitService } from './init';
+import { RouteConfigToken } from './services/routeConfig.service';
 
 // APP INITILIAZER only recieve promise/observable/void
 function initFactory(){
@@ -28,6 +29,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_SERVICE_CONFIG,
       useValue: APP_CONFIG,
+    },
+    {
+      provide: RouteConfigToken,
+      useValue: {title : 'Home'},
     },
     provideHttpClient(
       withInterceptors([requestInterceptor])

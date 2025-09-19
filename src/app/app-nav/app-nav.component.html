@@ -8,6 +8,7 @@
       <a mat-list-item routerLink="rooms">Rooms</a>
       <a mat-list-item routerLink="employee">Employee</a>
       <a mat-list-item routerLink="rooms/add">Add Room</a>
+      <a mat-list-item routerLink="bookings">Bookings</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -26,6 +27,8 @@
     <!-- Add Content Here -->
 
      <router-outlet></router-outlet>
+
+     <hr>
      <ng-content select="div.foot"></ng-content>
      
   </mat-sidenav-content>

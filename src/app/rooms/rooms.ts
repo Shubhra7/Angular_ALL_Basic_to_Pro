@@ -18,6 +18,8 @@ import { catchError, map, Observable, of, Subject, Subscription } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { RouterLink } from '@angular/router';
+import { Config } from '../services/config';
+import { RouteConfigToken } from '../services/routeConfig.service';
 
 @Component({
   selector: 'app-rooms',
@@ -25,6 +27,12 @@ import { RouterLink } from '@angular/router';
   imports: [RoomsList, JsonPipe, Header, AsyncPipe, RouterOutlet, RouterLink],
   templateUrl: './rooms.html',
   styleUrl: './rooms.scss',
+  providers: [
+    {
+      provide: RouteConfigToken,
+      useValue: {title: 'Room'}
+    }
+  ]
 })
 
 export class Rooms {
@@ -44,7 +52,7 @@ export class Rooms {
   // private roomsService = inject(RoomsService)
 
    // Service inject and Modal things
-  constructor(private modalService: NgbModal, private roomsService : RoomsService) {
+  constructor(private modalService: NgbModal, private roomsService : RoomsService, private configService : Config) {
 
     this.getErrors$ = this.error$.asObservable();
 
