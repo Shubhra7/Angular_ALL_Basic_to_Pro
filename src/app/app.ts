@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, signal, ViewChild, ViewContainerRef } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { Rooms } from './rooms/rooms';
 import { Container } from './container/container';
 import { NgStyle } from '@angular/common';
@@ -8,10 +8,11 @@ import { localStorageToken } from './localstorage.token';
 import { InitService } from './init';
 import { RouterLink } from '@angular/router';
 import { AppNavComponent } from './app-nav/app-nav.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Rooms, Container, NgStyle, Employee, RouterLink, AppNavComponent],
+  imports: [RouterOutlet, Rooms, Container, NgStyle, Employee, RouterLink, AppNavComponent ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   styles: [`h1 {color:red;}`],
@@ -33,11 +34,28 @@ export class App {
   // Using @ViewChild() controlling dom element in own and writing something
   @ViewChild('name',{static:true}) name!: ElementRef
 
-  constructor(@Inject(localStorageToken) private localStorage: any, private initService: InitService){
+  constructor(@Inject(localStorageToken) private localStorage: any, private initService: InitService, private router : Router){
     console.log(initService.config);
   }
 
   ngOnInit(){
+
+
+    // Later here can add staring loading animation
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationStart)
+    ).subscribe((event)=> {
+      console.log('Navigation Start...')
+    })
+
+
+    // Later here can add ending loading animation
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd)
+    ).subscribe((event)=>{
+      console.log('Navigation Completed!')
+    })
+
     this.name.nativeElement.innerText = "Debjit by @viewchild from app.ts"
 
     // adding value in localstorage through localStorageToken Service

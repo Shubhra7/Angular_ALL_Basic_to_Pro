@@ -12,7 +12,7 @@ export class Employee {
   empName:string = 'Jhon'
 
   //  By adding @Self(), Only look in the injector of the current class.**** Don’t check parents.****
-  constructor(@Self() private roomService: RoomService){
 
+  constructor(@Self() private roomService: RoomService){
   }
 }
