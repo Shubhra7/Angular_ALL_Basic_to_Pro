@@ -41,7 +41,8 @@
 }
 
 <div>
-  <button (click)="addRoom()">Add Room (POST)</button>
+  <!-- <button (click)="addRoom()">Add Room (POST)</button> -->
+  <button routerLink="addy">Add Room (POSTT)</button>
   
 </div>
 
@@ -88,4 +89,7 @@
         <button class="btn btn-secondary" (click)="modal.close()">Close</button>
     </div>
 </ng-template>
+
+<h2> Selected Room: </h2>
+<router-outlet></router-outlet>
 

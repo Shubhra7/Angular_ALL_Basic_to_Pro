@@ -16,11 +16,13 @@ import { Header } from '../header/header';
 import { Rooms as RoomsService } from './services/rooms';
 import { catchError, map, Observable, of, Subject, Subscription } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
+import { RouterOutlet } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-rooms',
   // imports: [ NgIf ],
-  imports: [RoomsList, JsonPipe, Header, AsyncPipe ],
+  imports: [RoomsList, JsonPipe, Header, AsyncPipe, RouterOutlet, RouterLink],
   templateUrl: './rooms.html',
   styleUrl: './rooms.scss',
 })
