@@ -17,6 +17,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIcon } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { noSpaceValidator } from './noSpaceValidator';
+import { BookingService } from './booking-service';
+import { exhaustMap, mergeMap, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-booking',
@@ -39,65 +41,94 @@ export class Booking {
 
   passPortCheck: boolean = true;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private bookingService: BookingService
+  ) {}
 
   ngOnInit() {
-    this.bookingForm = this.fb.group({
-      // new FormControl('') & ['']  are  same
-      roomId: new FormControl({ value: '2', disabled: true }, [
-        Validators.required,
-      ]),
-      guestEmail: [
-        '',
-        {
-          updateOn: 'blur',
-          validators: [Validators.required, Validators.email],
-        },
-      ],
-      guestName: ['', [Validators.required, Validators.minLength(5)]],
-      checkinDate: new FormControl(''),
-      checkoutDate: [''],
-      bookingStatus: [''],
-      bookingAmount: [''],
-      bookingDate: [''],
-      mobileNumber: [
-        '',
-        {
-          updateOn: 'blur',   //helps in bookingForm.valueChanges
-          validators: [Validators.required, Validators.email],
-        },
-      ],
-      address: this.fb.group({
-        addressLine1: ['', [Validators.required]],
-        addressLine2: [''],
-        city: ['', [Validators.required]],
-        state: ['', [Validators.required]],
-        country: [''],
-        zipCode: ['', noSpaceValidator],
-      }),
-
-      guests: this.fb.array([
-        //For adding functionality like click add to add guest info
-        this.fb.group({
-          guestName: ['', [Validators.required]],
-          age: new FormControl(''),
+    this.bookingForm = this.fb.group(
+      {
+        // new FormControl('') & ['']  are  same
+        roomId: new FormControl({ value: '2', disabled: true }, [
+          Validators.required,
+        ]),
+        guestEmail: [
+          '',
+          {
+            updateOn: 'blur',
+            validators: [Validators.required, Validators.email],
+          },
+        ],
+        guestName: ['', [Validators.required, Validators.minLength(5)]],
+        checkinDate: new FormControl(''),
+        checkoutDate: [''],
+        bookingStatus: [''],
+        bookingAmount: [''],
+        bookingDate: [''],
+        mobileNumber: [
+          '',
+          {
+            updateOn: 'blur', //helps in bookingForm.valueChanges
+            validators: [Validators.required, Validators.email],
+          },
+        ],
+        address: this.fb.group({
+          addressLine1: ['', [Validators.required]],
+          addressLine2: [''],
+          city: ['', [Validators.required]],
+          state: ['', [Validators.required]],
+          country: [''],
+          zipCode: ['', noSpaceValidator],
         }),
-      ]),
 
-      tnc: new FormControl(false, [Validators.requiredTrue]),
-    },{
-      updateOn: 'blur'
-    });
+        guests: this.fb.array([
+          //For adding functionality like click add to add guest info
+          this.fb.group({
+            guestName: ['', [Validators.required]],
+            age: new FormControl(''),
+          }),
+        ]),
+
+        tnc: new FormControl(false, [Validators.requiredTrue]),
+      },
+      {
+        updateOn: 'blur',
+      }
+    );
 
     // whenever any changes the stream will say here
-    this.bookingForm.valueChanges.subscribe((data) => {
-      console.log(data);
-    });
+    // this.bookingForm.valueChanges.subscribe((data) => {
+    //   this.bookingService.bookRoom(data).subscribe((data)=>{})
+    // });
+
+    this.bookingForm.valueChanges.pipe(
+
+    // mergeMap → every event matters.
+    //   mergeMap((data) => this.bookingService.bookRoom(data))
+    // ).subscribe((data) => console.log(data))
+
+
+    // switchMap → only latest event matters.
+    //   switchMap((data) => this.bookingService.bookRoom(data))
+    // ).subscribe((data) => console.log(data))
+
+    
+    // exhaustMap → first event matters, ignore rest until done.
+    exhaustMap((data) => this.bookingService.bookRoom(data))
+    ).subscribe((data) => console.log(data))
+
   }
 
   addBooking() {
     // console.log(this.bookingForm.value)
     console.log(this.bookingForm.getRawValue()); //For getting the value of the disabled state also
+
+    // this.bookingService
+    //   .bookRoom(this.bookingForm.getRawValue())
+    //   .subscribe((data) => {
+    //     console.log(data);
+    //   });
 
     // reset the form
     this.bookingForm.reset({
@@ -122,7 +153,9 @@ export class Booking {
       tnc: false,
     });
 
-    // this.getBookingData()
+    this.getBookingData()
+
+
   }
 
   getBookingData() {
