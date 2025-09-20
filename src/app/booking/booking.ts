@@ -16,6 +16,7 @@ import { MatButton } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIcon } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { noSpaceValidator } from './noSpaceValidator';
 
 @Component({
   selector: 'app-booking',
@@ -46,32 +47,51 @@ export class Booking {
       roomId: new FormControl({ value: '2', disabled: true }, [
         Validators.required,
       ]),
-      guestEmail: ['', [Validators.required, Validators.email]],
+      guestEmail: [
+        '',
+        {
+          updateOn: 'blur',
+          validators: [Validators.required, Validators.email],
+        },
+      ],
       guestName: ['', [Validators.required, Validators.minLength(5)]],
       checkinDate: new FormControl(''),
       checkoutDate: [''],
       bookingStatus: [''],
       bookingAmount: [''],
       bookingDate: [''],
-      mobileNumber: [''],
+      mobileNumber: [
+        '',
+        {
+          updateOn: 'blur',   //helps in bookingForm.valueChanges
+          validators: [Validators.required, Validators.email],
+        },
+      ],
       address: this.fb.group({
-        addressLine1: [''],
+        addressLine1: ['', [Validators.required]],
         addressLine2: [''],
-        city: [''],
-        state: [''],
+        city: ['', [Validators.required]],
+        state: ['', [Validators.required]],
         country: [''],
-        zipCode: [''],
+        zipCode: ['', noSpaceValidator],
       }),
 
       guests: this.fb.array([
         //For adding functionality like click add to add guest info
         this.fb.group({
-          guestName: [''],
+          guestName: ['', [Validators.required]],
           age: new FormControl(''),
         }),
       ]),
 
       tnc: new FormControl(false, [Validators.requiredTrue]),
+    },{
+      updateOn: 'blur'
+    });
+
+    // whenever any changes the stream will say here
+    this.bookingForm.valueChanges.subscribe((data) => {
+      console.log(data);
     });
   }
 
@@ -90,7 +110,7 @@ export class Booking {
       bookingAmount: '',
       bookingDate: '',
       mobileNumber: '',
-      address:{
+      address: {
         addressLine1: '',
         addressLine2: '',
         city: '',
@@ -100,8 +120,40 @@ export class Booking {
       },
       guests: [],
       tnc: false,
-
     });
+
+    // this.getBookingData()
+  }
+
+  getBookingData() {
+    // Need to pass all values in setValue
+    // this.bookingForm.setValue({
+    //   roomId: '2',
+    //   guestEmail: 'test@gmail.com',
+    //   guestName: '',
+    //   checkinDate: new Date('10-Feb-2026'),
+    //   checkoutDate: '',
+    //   bookingStatus: '',
+    //   bookingAmount: '',
+    //   bookingDate: '',
+    //   mobileNumber: '',
+    //   address:{
+    //     addressLine1: '',
+    //     addressLine2: '',
+    //     city: '',
+    //     state: '',
+    //     country: '',
+    //     zipCode: '',
+    //   },
+    //   guests: [],
+    //   tnc: false,
+    // })
+    // Can pass some values in patchValue
+    // this.bookingForm.patchValue({
+    //   roomId: '2',
+    //   guestEmail: 'test@gmail.com',
+    //   guestName: '',
+    // })
   }
 
   get guests(): FormArray {
