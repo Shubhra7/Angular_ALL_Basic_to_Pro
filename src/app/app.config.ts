@@ -1,5 +1,6 @@
 import {
   ApplicationConfig,
+  ErrorHandler,
   inject,
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
@@ -14,6 +15,7 @@ import { routes } from './app.routes';
 import { requestInterceptor } from './request-interceptor';
 import {  InitService } from './init';
 import { RouteConfigToken } from './services/routeConfig.service';
+import { GlobalErrorHandler } from './errorhandler.service';
 
 // APP INITILIAZER only recieve promise/observable/void
 function initFactory(){
@@ -38,5 +40,7 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([requestInterceptor])
     ),
     provideAppInitializer(initFactory),// Angular waits for this Observable to complete
+
+    {provide: ErrorHandler, useClass: GlobalErrorHandler}  //For global error handler
   ],
 };

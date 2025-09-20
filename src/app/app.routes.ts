@@ -9,6 +9,8 @@ import { ROOMS_ROUTES } from './rooms/rooms.routes';
 import { Booking } from './booking/booking';
 import { lazyLoadGauard, loginGuard } from './guard/login-guard';
 import { bookingGuard } from './booking/guard/booking-guard';
+import { Comments } from './comment/comment';
+import { commentGuardGuard } from './comment/guard/comment-guard-guard';
 
 export const routes: Routes = [
   { path: 'employee', component: Employee, canActivate: [loginGuard] },
@@ -37,6 +39,11 @@ export const routes: Routes = [
     loadComponent: ()=> import('./booking/booking').then((m)=> m.Booking),
     canActivate: [loginGuard],
     canDeactivate: [bookingGuard]
+  },
+  {
+    path:'comment', 
+    component: Comments, 
+    resolve: {comments: commentGuardGuard}
   },
   { path: '**', component: Notfound }, //wildcart route
 ];
