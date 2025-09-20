@@ -41,6 +41,6 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAppInitializer(initFactory),// Angular waits for this Observable to complete
 
-    {provide: ErrorHandler, useClass: GlobalErrorHandler}  //For global error handler
+    // {provide: ErrorHandler, useClass: GlobalErrorHandler}  //For global error handler
   ],
 };
