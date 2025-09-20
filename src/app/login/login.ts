@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Emailvalidator } from '../emailvalidator/emailvalidator';
 import { Hover } from '../hover';
 import { Router } from '@angular/router';
+import { LoginService } from './login-service';
 
 @Component({
   selector: 'app-login',
@@ -16,13 +17,12 @@ export class Login {
   password: string='';
 
   // taking Router Service provided by Angular for navgiate 
-  constructor(private route : Router){}
+  constructor(private route : Router, private loginService : LoginService){}
 
   Login(){
-    if(this.email==="admin@gmail.com" && this.password==='Admin'){
-      alert("Login sucessful");
-      this.route.navigate(['/rooms','add'])
-      // this.route.navigateByUrl('/rooms/add')
+    if(this.loginService.login(this.email,this.password)){
+      this.route.navigate(['/rooms'])
+      // this.route.navigateByUrl('/rooms')
     }
   }
 

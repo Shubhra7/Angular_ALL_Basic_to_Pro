@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, signal, ViewChild, ViewContainerRef } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router} from '@angular/router';
 import { Rooms } from './rooms/rooms';
 import { Container } from './container/container';
 import { NgStyle } from '@angular/common';
@@ -12,7 +12,7 @@ import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Rooms, Container, NgStyle, Employee, RouterLink, AppNavComponent ],
+  imports: [ Rooms, Container, NgStyle, Employee, RouterLink, AppNavComponent ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   styles: [`h1 {color:red;}`],
