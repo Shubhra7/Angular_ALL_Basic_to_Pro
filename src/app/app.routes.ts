@@ -31,6 +31,10 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: 'bookings', component: Booking, canActivate: [loginGuard]},
-  { path: 'bookings', component: Booking},
+  { 
+    path: 'bookings/:roomid', 
+    loadComponent: ()=> import('./booking/booking').then((m)=> m.Booking),
+    // canActivate: [loginGuard]
+  },
   { path: '**', component: Notfound }, //wildcart route
 ];

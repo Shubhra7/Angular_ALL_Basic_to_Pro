@@ -68,9 +68,17 @@
 
     @if (bookingForm.get('guestName')?.hasError('minlength')) {
     <mat-error> Guest name must be at least 5 characters! </mat-error>
-    } @if (bookingForm.get('guestName')?.hasError('required')) {
+    } 
+    @if (bookingForm.get('guestName')?.hasError('required')) {
     <mat-error> Email is <strong>required</strong> </mat-error>
     }
+    @if (bookingForm.get('guestName')?.hasError('invalidName')) {
+    <mat-error> <strong>test</strong> in name not allowed </mat-error>
+    }
+    @if (bookingForm.get('guestName')?.hasError('invalidSpecialChar')) {
+    <mat-error> <strong>Special Character</strong> not allowed </mat-error>
+    }
+
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
@@ -118,6 +126,11 @@
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
+  @if(bookingForm.get('checkoutDate')?.hasError('invalidDate')){
+    <mat-error>
+      Checkout date must be <strong>greater</strong> than Checkin date
+    </mat-error>
+  }
 
   <mat-form-field class="example-full-width">
     <mat-label>Checkout date</mat-label>
@@ -132,6 +145,12 @@
     ></mat-datepicker-toggle>
     <mat-datepicker #picker2></mat-datepicker>
   </mat-form-field>
+
+  @if(bookingForm.get('checkoutDate')?.hasError('invalidDate')){
+    <mat-error>
+      Checkout date must be <strong>greater</strong> than Checkin date
+    </mat-error>
+  }
 
   <mat-form-field class="example-full-width">
     <mat-label>Booking date</mat-label>

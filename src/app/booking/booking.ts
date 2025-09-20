@@ -19,6 +19,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { noSpaceValidator } from './noSpaceValidator';
 import { BookingService } from './booking-service';
 import { exhaustMap, mergeMap, switchMap } from 'rxjs';
+import { nameValidator } from './nameValidator';
+import { specialCharValidator } from './specialCharValidator';
+import { dateValidator } from './dateValidator';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-booking',
@@ -43,14 +47,17 @@ export class Booking {
 
   constructor(
     private fb: FormBuilder,
-    private bookingService: BookingService
+    private bookingService: BookingService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    const roomId = this.route.snapshot.paramMap.get('roomid');
+    
     this.bookingForm = this.fb.group(
       {
         // new FormControl('') & ['']  are  same
-        roomId: new FormControl({ value: '2', disabled: true }, [
+        roomId: new FormControl({ value: roomId, disabled: true }, [
           Validators.required,
         ]),
         guestEmail: [
@@ -60,7 +67,7 @@ export class Booking {
             validators: [Validators.required, Validators.email],
           },
         ],
-        guestName: ['', [Validators.required, Validators.minLength(5)]],
+        guestName: ['', [Validators.required, Validators.minLength(5),nameValidator,specialCharValidator('@')]],
         checkinDate: new FormControl(''),
         checkoutDate: [''],
         bookingStatus: [''],
@@ -70,7 +77,7 @@ export class Booking {
           '',
           {
             updateOn: 'blur', //helps in bookingForm.valueChanges
-            validators: [Validators.required, Validators.email],
+            validators: [Validators.required],
           },
         ],
         address: this.fb.group({
@@ -94,6 +101,7 @@ export class Booking {
       },
       {
         updateOn: 'blur',
+        validators: [dateValidator],
       }
     );
 
@@ -113,7 +121,7 @@ export class Booking {
     //   switchMap((data) => this.bookingService.bookRoom(data))
     // ).subscribe((data) => console.log(data))
 
-    
+
     // exhaustMap → first event matters, ignore rest until done.
     exhaustMap((data) => this.bookingService.bookRoom(data))
     ).subscribe((data) => console.log(data))
@@ -122,6 +130,8 @@ export class Booking {
 
   addBooking() {
     // console.log(this.bookingForm.value)
+    console.log("hello form submitted data: ");
+    
     console.log(this.bookingForm.getRawValue()); //For getting the value of the disabled state also
 
     // this.bookingService
@@ -153,7 +163,7 @@ export class Booking {
       tnc: false,
     });
 
-    this.getBookingData()
+    // this.getBookingData()
 
 
   }

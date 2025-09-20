@@ -21,7 +21,7 @@ export const ROOMS_ROUTES: Routes = [
             },
 
             {path: 'addy', component: RoomsAdd, canActivate:[loginGuard]},
-            {path: ':roomid', component: RoomsBooking, canActivate:[loginGuard]},
+            // {path: ':roomid', component: RoomsBooking, canActivate:[loginGuard]},
         ]
     }
 ]
