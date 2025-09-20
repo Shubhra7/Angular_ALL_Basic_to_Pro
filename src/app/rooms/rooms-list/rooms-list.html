@@ -11,8 +11,8 @@
     <th>Select Room</th>
   </tr>
   <!-- @for (item of roomList | slice:0:2; track $index) { -->
-  @for (item of rooms; track $index) {
-  <!-- apploed ngclass but class.<calssname>  -->
+
+  @for (item of rooms | filter : price; track $index) {
   <tr
     [class.bg-gray-100]="$index % 2 === 0"
     [class.bg-white]="$index % 2 !== 0"

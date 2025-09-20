@@ -18,7 +18,7 @@
     Rooms List
 </div> -->
 
-<h3>Use of <code>&#64;if</code></h3>
+<!-- <h3>Use of <code>&#64;if</code></h3>
 @if (rooms.availableRooms && rooms.availableRooms > 0) {
 <div style="margin-bottom: 10px">Rooms List</div>
 <ul>
@@ -38,7 +38,7 @@
 
 @if (selectedRoom) {
   {{selectedRoom | json}}
-}
+} -->
 
 <div>
   <!-- <button (click)="addRoom()">Add Room (POST)</button> -->
@@ -60,6 +60,16 @@
   Number of Rooms: {{ roomsCount$ | async}}
 </h1>
 
+<br>
+<hr>
+<br>
+
+heelo
+{{ priceFilter.valueChanges | async | json }}
+<div>
+  <input type="number" name="form-control" placeholder="Price" [formControl]="priceFilter" >
+</div>
+
 
 <h1>ROOM DETAILS</h1>
 @if (roomList.length > 0 && !hideRooms) {
@@ -68,6 +78,7 @@
     [rooms]="roomList" 
     [title]="title"
     (selectedRoom)="selectTheRoom($event)"
+    [price] = "priceFilter?.value || 0"
   ></app-rooms-list>
 }@else {
 <h2>!!!No room in the Hotel 🤣🤣 or RoomList hided by the Button</h2>

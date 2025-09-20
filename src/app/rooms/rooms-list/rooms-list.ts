@@ -2,12 +2,13 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Simple
 import { RoomList } from '../roomsType';
 import { CurrencyPipe, DatePipe, DecimalPipe, JsonPipe, NgStyle, TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { FilterPipe } from '../filter-pipe';
 @Component({
   selector: 'app-rooms-list',
-  imports: [NgStyle, DatePipe, UpperCasePipe, TitleCasePipe, CurrencyPipe, DecimalPipe, RouterLink],
+  imports: [NgStyle, DatePipe, UpperCasePipe, TitleCasePipe, CurrencyPipe, DecimalPipe, RouterLink, FilterPipe],
   templateUrl: './rooms-list.html',
   styleUrl: './rooms-list.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   
   // Change detection of optimized the UI render for @Input reference change, internal events, or async pipes; faster but needs immutable updates.
 
@@ -15,6 +16,9 @@ import { RouterLink } from '@angular/router';
 export class RoomsList {
   @Input() rooms: RoomList[] =[];
   @Input() title: string= '';
+
+  // For filter
+  @Input() price:number = 0;
 
   @Output() selectedRoom = new EventEmitter<RoomList>();
 

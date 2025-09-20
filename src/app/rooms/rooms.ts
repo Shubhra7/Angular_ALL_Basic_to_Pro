@@ -20,11 +20,12 @@ import { RouterOutlet } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { Config } from '../services/config';
 import { RouteConfigToken } from '../services/routeConfig.service';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-rooms',
   // imports: [ NgIf ],
-  imports: [RoomsList, JsonPipe, Header, AsyncPipe, RouterOutlet, RouterLink],
+  imports: [RoomsList, JsonPipe, Header, AsyncPipe, RouterOutlet, RouterLink, ReactiveFormsModule],
   templateUrl: './rooms.html',
   styleUrl: './rooms.scss',
   providers: [
@@ -44,6 +45,10 @@ export class Rooms {
   rooms$
   getErrors$
   roomsCount$
+
+
+  priceFilter = new FormControl(0)
+
 
   // Subject: A Subject is both an Observable and an Observer at the same time. so You can subscribe to it (like any Observable). and also You can also push values into it using next().
   error$ = new Subject<string>();
