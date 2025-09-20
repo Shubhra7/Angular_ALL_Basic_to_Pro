@@ -12,7 +12,7 @@
   #emailCtrl="ngModel"
 />
 
-@if (emailCtrl.errors?.['invalidEmail']) {
+@if (emailCtrl.errors?.['invalidEmail'] && emailCtrl.touched) {
   <div style="color:red">Email must contain '@'</div>
 }
     

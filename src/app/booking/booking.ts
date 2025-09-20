@@ -23,6 +23,8 @@ import { nameValidator } from './nameValidator';
 import { specialCharValidator } from './specialCharValidator';
 import { dateValidator } from './dateValidator';
 import { ActivatedRoute } from '@angular/router';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-booking',
@@ -35,6 +37,8 @@ import { ActivatedRoute } from '@angular/router';
     MatButton,
     MatExpansionModule,
     MatCheckboxModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   templateUrl: './booking.html',
   styleUrl: './booking.scss',
